@@ -1,0 +1,69 @@
+<div class="container">
+    <div class="row">
+        <button class="btn btn-primary" (click)="addEvent(mymodal,'','')">Add Event</button>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <colgroup>
+                    <ng-container *ngFor="let col of cols; let g=index">
+                        <col span="1">
+                    </ng-container>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <ng-container *ngFor="let col of cols; let c=index">
+                            <th>{{col.header}}</th>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let value of values; let v= index">
+                        <tr>
+                            <ng-container *ngFor="let row of cols; let c=index">
+                                <td [ngClass]="{'highlight': row.header == eventDay && row.events[0]?.timeFrom == value.time &&  row.events[0]?.timeTo == value.time ? true :false }"
+                                    (click)="addEvent(mymodal,value,row)" id="{{value.time}}{{row.header}}">
+
+                                    {{value[row.field]}}
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                </tbody>
+
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<ng-template #mymodal let-event>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{header}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="event.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="margin">
+            <input type="text" [(ngModel)]="eventTitle" placeholder="Add Title">
+        </div>
+
+        <div class="margin">
+            <select name="day" [(ngModel)]="eventDay">
+                <option *ngFor="let day of cols index as i" [value]="day.header">{{day.header}}</option>
+            </select>
+            Day
+        </div>
+        <div class="margin">
+            <input type="time" [(ngModel)]="eventTimeFrom" placeholder="Time From">From
+        </div>
+        <div class="margin">
+            <input type="time" [(ngModel)]="eventTimeTo" placeholder="Time To">To
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="event.close('Cancel click')">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="saveEvent()">Save</button>
+    </div>
+</ng-template>

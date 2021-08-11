@@ -1,0 +1,17 @@
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+td,
+th {
+    border: 1px solid #000;
+    text-align: left;
+    padding: 8px;
+}
+.margin {
+    margin-top: 10px;    
+  }
+  .highlight{
+    background-color: #4CAF50 !important;
+    color: #4a2d8f;
+  }
